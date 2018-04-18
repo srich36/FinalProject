@@ -4,12 +4,13 @@
 
 #include "Plane.h"
 using namespace std;
-Plane::Plane(int absoluteTime, int numcargo, int numpassengers, int numchildren, int numgrandchildren){
+Plane::Plane(int absoluteTime, int numcargo, int numpassengers, int numchildren, int numgrandchildren, int numfuel){
     absoluteTimeAvailableForProcessing = absoluteTime;
     cargo = numcargo;
     passengers = numpassengers;
     children = numchildren;
     grandchildren = numgrandchildren;
+    fuel = numfuel;
 }
 
 
@@ -29,10 +30,16 @@ double Plane::calculateFuelFactor(int fuelAmount){
     double fuelFactor = 20/fuelAmount;
     return fuelFactor;
 }
+
 void Plane::calculatePriority() {
 
-    double fuelFactor = calculateFuelFactor(fuel);
-    priority = children*CHILDREN_FACTOR+grandchildren*GRANDCHILDREN_FACTOR+cargo*CARGO_FACTOR+passengers*PASSENGER_FACTOR+fuelFactor*fuel;
+    if(!requestAvailableForProcessing)
+        priority = -1;
+    else {
+        double fuelFactor = calculateFuelFactor(fuel);
+        priority = children * CHILDREN_FACTOR + grandchildren * GRANDCHILDREN_FACTOR + cargo * CARGO_FACTOR +
+                   passengers * PASSENGER_FACTOR + fuelFactor * fuel;
+    }
 }
 
 void Plane::setCrash(bool planeCrashed){crashed = planeCrashed;}

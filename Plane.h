@@ -10,8 +10,8 @@ using namespace std;
 
 /*
  * The plane class takes the following arguments in its constructor: absolute time of the request (i.e. absolute time
- * when the request is able to be processed, number of cargo, amount of fuel
- * number of passengers, number of children, number of grandchildren, in this order
+ * when the request is able to be processed, number of cargo,
+ * number of passengers, number of children, number of grandchildren, and amount of fuel in this order
  *
  * Methods:
  *
@@ -62,7 +62,7 @@ private:
     double calculateFuelFactor(int fuelAmount);
 
 public:
-    Plane(int absoluteTime, int cargo, int passengers, int children, int grandchildren);
+    Plane(int absoluteTime, int cargo, int passengers, int children, int grandchildren, int numfuel);
     void update(int time);
     void setCrash(bool planeCrashed);
     int getcargo();
