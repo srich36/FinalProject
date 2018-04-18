@@ -1,4 +1,4 @@
-﻿//Teng
+//Teng
 
 #include "stdafx.h"
 #include <stdio.h>
@@ -97,10 +97,14 @@ public:
 };
 
 int main() {
+	//Prompting the user for the filename.
+	string filename;
+	cout << "What is the name of the file?" << endl;
+	cin >> filename;
 	//Creating an object that can access the functions in the input class.
 	input object;
-	//Naming the file myFile and reading a csv file called sampleinput.csv.
-	ifstream myFile("sampleinput.csv");
+	//fstream does not accept string as parameters so we need to convert to constant char* using .c_str()
+	fstream myFile(filename.c_str());
 	string lineinput;
 	//Reads until file is complete, ie no more newlines.
 	while (myFile.good()) {
