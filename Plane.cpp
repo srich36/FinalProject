@@ -14,7 +14,25 @@ Plane::Plane(int absoluteTime, int numcargo, int numpassengers, int numchildren,
 
 
 void Plane::update(int time){
-    return;
+
+    fuel--;
+    if(time==absoluteTimeAvailableForProcessing){
+        requestAvailableForProcessing = true;
+    }
+    if(requestAvailableForProcessing) {
+        waitTime = time - absoluteTimeAvailableForProcessing;
+    }
+    calculatePriority();
+}
+
+double Plane::calculateFuelFactor(int fuelAmount){
+    double fuelFactor = 20/fuelAmount;
+    return fuelFactor;
+}
+void Plane::calculatePriority() {
+
+    double fuelFactor = calculateFuelFactor(fuel);
+    priority = children*CHILDREN_FACTOR+grandchildren*GRANDCHILDREN_FACTOR+cargo*CARGO_FACTOR+passengers*PASSENGER_FACTOR+fuelFactor*fuel;
 }
 
 void Plane::setCrash(bool planeCrashed){crashed = planeCrashed;}
@@ -25,4 +43,5 @@ int Plane::getgrandchildren(){return grandchildren;}
 int Plane::getwaitTime(){return waitTime;}
 int Plane::getpriority(){return priority;}
 int Plane::getcrashed(){return crashed;}
-bool Plane::getrequestAvailableForProcessing(){return requestAvalaiableForProcessing;}
+bool Plane::getrequestAvailableForProcessing(){return requestAvailableForProcessing;}
+char Plane::getTypeOfFlight() {return typeOfFlight;}

@@ -10,7 +10,7 @@ using namespace std;
 
 /*
  * The plane class takes the following arguments in its constructor: absolute time of the request (i.e. absolute time
- * when the request is able to be processed, number of cargo,
+ * when the request is able to be processed, number of cargo, amount of fuel
  * number of passengers, number of children, number of grandchildren, in this order
  *
  * Methods:
@@ -38,22 +38,28 @@ using namespace std;
  *
  * calculatePriority(): This is a private helper function that implements the formula for calculating priority. This is hidden from
  * other class access because only the plans should be able to set the priority of itself.
+ *
+ * calculateFuelFactor(int fuel); Private helper function that assigns a value weighting to the fuel factor
  */
 
 class Plane {
 
 private:
+    const double CHILDREN_FACTOR = 10, GRANDCHILDREN_FACTOR = 7, CARGO_FACTOR = 1, PASSENGER_FACTOR = 1;
     int cargo;
     int passengers;
     int children;
+    int fuel;
     int grandchildren;
     int absoluteTimeAvailableForProcessing;
     int waitTime;
-    int priority;
+    double priority;
     bool crashed;
-    bool requestAvalaiableForProcessing;
+    char typeOfFlight;
+    bool requestAvailableForProcessing;
 
     void calculatePriority();
+    double calculateFuelFactor(int fuelAmount);
 
 public:
     Plane(int absoluteTime, int cargo, int passengers, int children, int grandchildren);
@@ -67,6 +73,7 @@ public:
     int getpriority();
     int getcrashed();
     bool getrequestAvailableForProcessing();
+    char getTypeOfFlight();
 };
 
 
