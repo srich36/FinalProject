@@ -20,7 +20,9 @@ void Plane::refuel() {
 
 void Plane::update(int time){
 
-    fuel--;
+    if(fuel>0){
+        fuel--;
+    }
     if(time==absoluteTimeAvailableForProcessing){
         requestAvailableForProcessing = true;
     }
