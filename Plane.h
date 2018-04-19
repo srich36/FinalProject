@@ -34,6 +34,9 @@ using namespace std;
  * This method should be called by the ATC class when it is determined that a plane must be crashed. Once called, this will
  * change the crashed variable so it can the be passed into the update method of the statistics class.
  *
+ * refuel: Takes no parameters and increments absoluteTimeAvailableForProcessing by 10 and increments fuel by 30 (so by the time
+ * the 10 time units passes 20 fuel is left)
+ *
  * Private:
  *
  * calculatePriority(): This is a private helper function that implements the formula for calculating priority. This is hidden from
@@ -65,6 +68,7 @@ public:
     Plane(int absoluteTime, int cargo, int passengers, int children, int grandchildren, int numfuel);
     void update(int time);
     void setCrash(bool planeCrashed);
+    void refuel();
     int getcargo();
     int getpassengers();
     int getchildren();

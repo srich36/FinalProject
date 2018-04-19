@@ -13,6 +13,10 @@ Plane::Plane(int absoluteTime, int numcargo, int numpassengers, int numchildren,
     fuel = numfuel;
 }
 
+void Plane::refuel() {
+    absoluteTimeAvailableForProcessing+=10;
+    fuel+=30;
+}
 
 void Plane::update(int time){
 
