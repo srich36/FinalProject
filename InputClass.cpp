@@ -96,6 +96,7 @@ public:
 
 };
 
+
 int main() {
 	//Prompting the user for the filename.
 	string filename;
@@ -115,14 +116,20 @@ int main() {
 			//Calls process functions in input class which splits by commas.
 			//You can get the value by calling object.get*****().
 			object.process(lineinput);
-			
+			//If it is data, we create a new plane object by passing the values found in input into the plane constructor.
+			//We now have an plane object called plane1 which can call the functions in plane class using this data.
+			if (object.getCommand() == "D") {
+				Plane plane1 = Plane(object.getTime(), static_cast<int>(object.getCargo()), object.getPeople(), object.getFamily(), object.getGrand(), object.getFuel());
+				
 
-			
 
 
 
 
 
+
+
+			}
 		}
 		else {
 			;//pass
@@ -132,5 +139,4 @@ int main() {
 	system("pause");
 	return 0;
 }
-
 
