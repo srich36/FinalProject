@@ -76,11 +76,7 @@ void updateAll(int time, Plane plane)
         sumTakeoffWait += (time - plane.getabsoluteTimeAvailableForProcessing());
         sumCargoSafe += plane.getcargo();
     }
-<<<<<<< HEAD
-    else if (Plane.getTypeOfFlight() == 'a') // if landing (arrival)
-=======
     else if (plane.getTypeOfFlight() == 'a')    // if landing (arrival)
->>>>>>> 42fb3c24a3d914b97973045fbfc5f507c1ba7ace
     {
         numArrive ++;
         sumLandWait += (time - plane.getabsoluteTimeAvailableForProcessing());

@@ -13,6 +13,7 @@
 #include <fstream>
 #define DATASIZEMAX 8
 #include "Plane.h"
+#include <cctype>
 
 using namespace std;
 
@@ -48,7 +49,7 @@ public:
 		}
 		
 		command = arry[0];
-		if (command == "D") {
+		if (command == "d" || command == "D") {
 			absolutetime += stoi(arry[1]);
 			time = absolutetime;
 			action = arry[2];
@@ -75,6 +76,7 @@ public:
 		cout << "What is the name of the file?" << endl;
 		cin >> filename;
 		fstream myFile(filename.c_str());
+        cout << myFile.is_open() << endl; //tests to see if the file is opened
 		string lineinput;
 		cout << "Filename is: " << filename.c_str() << endl;
 		while (myFile.good()) {
@@ -85,7 +87,7 @@ public:
 				
 				if (getCommand() == "D" || getCommand() == "d") {
 					Plane planeObject = Plane(getTime(), static_cast<int>(getCargo()), getPeople(), getFamily(), getGrand(), getFuel(), getAction());
-					cout << planeObject.getcargo() << endl; //Test to see that it works.
+					//cout << planeObject.getcargo() << endl; //Test to see that it works.
 					//controller.buildQueue(planeObject);
 
 
