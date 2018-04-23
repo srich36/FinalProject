@@ -78,7 +78,7 @@ public:
 		string lineinput;
 		cout << "Filename is: " << filename.c_str() << endl;
 		while (myFile.good()) {
-            cout << "got in the input file. Nice!" << endl;
+            		cout << "got in the input file. Nice!" << endl;
 			getline(myFile, lineinput);
 			if (lineinput != "") {
 				process(lineinput);
