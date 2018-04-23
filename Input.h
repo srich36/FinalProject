@@ -16,10 +16,10 @@
 
 using namespace std;
 
-class input {
+class Input {
 private:
     string command, action;
-    int time, fuel, people, family, grand;
+    int time, fuel, people, family, grand, absolutetime;
     double cargo;
 public:
     //Process function takes string lineinput as parameter. Returns nothing.
@@ -52,7 +52,8 @@ public:
         command = arry[0];
         //If data command, set variables equal to rest of elements in array.
         if (command == "D") {
-            time = stoi(arry[1]);
+            absolutetime+=stoi(arry[1]);
+            time = absolutetime;
             action = arry[2];
             fuel = stoi(arry[3]);
             people = stoi(arry[4]);
@@ -60,15 +61,15 @@ public:
             family = stoi(arry[6]);
             grand = stoi(arry[7]);
         }
-            //If the command is W or P, we null the rest of the values.
+            //If the command is W or P, we null the rest of the values to a -1 placeholder to maintain type int.
         else {
-            time = NULL;
-            action = "";
-            fuel = NULL;
-            people = NULL;
-            cargo = NULL;
-            family = NULL;
-            grand = NULL;
+            time = -1;
+            action = -1;
+            fuel = -1;
+            people = -1;
+            cargo = -1;
+            family = -1;
+            grand = -1;
         }
 
     }
@@ -97,6 +98,44 @@ public:
     }
     int getGrand() {
         return grand;
+    }
+
+    Input(){
+        absolutetime = 1;
+    }
+
+    void parseAndCreateQueue(){
+        string filename;
+        cout << "What is the name of the file?" << endl;
+        cin >> filename;
+        //Creating an object that can access the functions in the input class.
+        //fstream does not accept string as parameters so we need to convert to constant char* using .c_str()
+        fstream myFile(filename.c_str());
+        string lineinput;
+        //Reads until file is complete, ie no more newlines.
+        while (myFile.good()) {
+            //First line of myFile is set as the string lineinput.
+            getline(myFile, lineinput);
+            //Ignores the instances where lines are completely blank.
+            if (lineinput != "") {
+                //Calls process functions in input class which splits by commas.
+                //You can get the value by calling object.get*****().
+                process(lineinput);
+                //If it is data, we create a new plane object by passing the values found in input into the plane constructor.
+                //We now have an plane object called plane1 which can call the functions in plane class using this data.
+                if (getCommand() == "D") {
+                    Plane plane1 = Plane(getTime(), static_cast<int>(getCargo()), getPeople(), getFamily(), getGrand(), getFuel(), getCommand());
+                    // controller.buildQueue(plane1);
+                    //cout << plane1.getchildren() << endl;
+
+
+                }
+            }
+            else {
+                ;//pass
+            }
+        }
+        myFile.close();
     }
 
 };
