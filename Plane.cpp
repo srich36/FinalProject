@@ -6,7 +6,7 @@
 #include <iostream>
 
 using namespace std;
-Plane::Plane(int absoluteTime, int numcargo, int numpassengers, int numfamily, int numgrandchildren, int numfuel, char typeFlight){
+Plane::Plane(int absoluteTime, int numcargo, int numpassengers, int numfamily, int numgrandchildren, int numfuel, string typeFlight){
     absoluteTimeAvailableForProcessing = absoluteTime;
     cargo = numcargo;
     passengers = numpassengers;
@@ -41,7 +41,7 @@ void Plane::update(int time, int timeSkipped = 1){
     calculatePriority();
 }
 
-double Plane::calculateFuelFactor(int fuelAmount){
+int Plane::calculateFuelFactor(int fuelAmount){
     int fuelFactor = 20/fuelAmount;
     return fuelFactor;
 }
@@ -54,10 +54,12 @@ void Plane::calculatePriority() {
         int fuelFactor = calculateFuelFactor(fuel);
         priority = family * FAMILY_FACTOR + grandchildren * GRANDCHILDREN_FACTOR + cargo * CARGO_FACTOR +
                    passengers * PASSENGER_FACTOR + fuelFactor * fuel;
-        if(tolower(typeOfFlight) == 'd')
+        if(typeOfFlight == "D" || typeOfFlight == "d")
             priority+=DEPARTURE_FACTOR;
-        else if(tolower(typeOfFlight) == 'a')
+        else if(typeOfFlight == "A" || typeOfFlight == "a")
             priority+=ARRIVAL_FACTOR;
+        else
+            cout << "Error. Command not parsed correctly." << endl;
     }
 }
 
@@ -70,6 +72,6 @@ int Plane::getwaitTime(){return waitTime;}
 int Plane::getpriority(){return priority;}
 int Plane::getcrashed(){return crashed;}
 bool Plane::getrequestAvailableForProcessing(){return requestAvailableForProcessing;}
-char Plane::getTypeOfFlight() {return typeOfFlight;}
+string Plane::getTypeOfFlight() {return typeOfFlight;}
 int Plane::getabsoluteTimeAvailableForProcessing() {return absoluteTimeAvailableForProcessing;}
 

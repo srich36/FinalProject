@@ -6,6 +6,7 @@
 #define FINALPROJECT_PLANE_H
 
 #include <iostream>
+#include <string>
 using namespace std;
 
 /*
@@ -58,14 +59,14 @@ private:
     int waitTime;
     double priority;
     bool crashed;
-    char typeOfFlight;
+    string typeOfFlight;
     bool requestAvailableForProcessing;
 
     void calculatePriority();
-    double calculateFuelFactor(int fuelAmount);
+    int calculateFuelFactor(int fuelAmount);
 
 public:
-    Plane(int absoluteTime, int cargo, int passengers, int children, int grandchildren, int numfuel, char typeOfFlight);
+    Plane(int absoluteTime, int cargo, int passengers, int family, int grandchildren, int numfuel, string typeOfFlight);
     void update(int time, int skipped);
     void setCrash(bool planeCrashed);
     void refuel();
@@ -77,7 +78,7 @@ public:
     int getpriority();
     int getcrashed();
     bool getrequestAvailableForProcessing();
-    char getTypeOfFlight();
+    string getTypeOfFlight();
     int getabsoluteTimeAvailableForProcessing();
 };
 

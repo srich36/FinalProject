@@ -119,7 +119,7 @@ int main() {
 			//If it is data, we create a new plane object by passing the values found in input into the plane constructor.
 			//We now have an plane object called plane1 which can call the functions in plane class using this data.
 			if (object.getCommand() == "D") {
-				Plane plane1 = Plane(object.getTime(), static_cast<int>(object.getCargo()), object.getPeople(), object.getFamily(), object.getGrand(), object.getFuel());
+				Plane plane1 = Plane(object.getTime(), static_cast<int>(object.getCargo()), object.getPeople(), object.getFamily(), object.getGrand(), object.getFuel(), object,getCommand());
 				
 
 
