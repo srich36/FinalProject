@@ -7,7 +7,7 @@
 
 
 #include "Plane.h"              // to use Sean's plane class
-#include <ctime>                 // to get runtime (needed for print function) ACTUALLY USE
+#include <time.h>                 // to get runtime (needed for print function) ACTUALLY USE
 
 #include <iostream>
 using namespace std;
@@ -21,6 +21,7 @@ private:
     //
     // variables to be printed directly
     //
+    clock_t tstart;
     int sumTakeoffWait;         // sum of all takeoff wait times
     int sumLandWait;            // sum of all landing (arrival) wait times
     int numCrash;               // total number of planes crashed
@@ -46,6 +47,7 @@ public:
     //
     PlaneStats()
     {
+        tstart = clock();
         sumTakeoffWait = sumLandWait = numCrash = numDepart = numArrive = numPeopleArriveSafe = numPeopleKilled = numGrandKilled = numFamilyKilled = sumGrandWait = sumFamilyWait = sumCargoSafe = sumCargoDestroyed = totalTime = numGrand = numFamily = 0;
     };
     //
@@ -122,7 +124,7 @@ void PlaneStats::print()
     cout << "Total amount of cargo destroyed: " << sumCargoDestroyed << endl;
 
     // need total time value (NEED TO USE SOME CLOCK)
-    //cout << "Total amount of time it takes to process a input file: " << time << endl;
+    cout << "Total runtime for this input file: " << (double)(clock() - tstart)/CLOCKS_PER_SEC << " seconds" << endl;
 }
 
 
