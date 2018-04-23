@@ -19,19 +19,23 @@
 #include <iostream>
 #include "Plane.h"
 #include "Input.h"
-//#include "ATCclass.h"
+#include "ATC.h"
 #include "PlaneStats.h"
 #include "Queue.h"
 using namespace std;
 
 int main(){
 
-    //ATC controller;
+    ATC controller;
     Input object;
 
     //THIS WILL PASS CONTROLLER INTO  THE parseAndCreateQueue METHOD WHEN THE ATC CLASS IS FULLY IMPLEMENTED//
 
-    object.parseAndCreateQueue();//controller);
+    object.parseAndCreateQueue(controller);//controller);
+
+    controller.processAllRequests();
+    controller.printStats();
+
     //controller.process();
     return 0;
 }

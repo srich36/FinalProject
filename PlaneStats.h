@@ -55,7 +55,7 @@ public:
     //
     // prints statistics, takes int value of time
     //
-    void print(int);
+    void print();
 };
 
 ///////////////////////////////////////
@@ -74,13 +74,13 @@ void PlaneStats::updateAll(int time, Plane plane1)
         numFamilyKilled += plane1.getfamily();
         sumCargoDestroyed += plane1.getcargo();
     }
-    else if (plane1.getTypeOfFlight() == "d")    // if taking off (departure)
+    else if (plane1.getTypeOfFlight() == "d" || plane1.getTypeOfFlight() == "D")    // if taking off (departure)
     {
         numDepart ++;
         sumTakeoffWait += (time - plane1.getabsoluteTimeAvailableForProcessing());
         sumCargoSafe += plane1.getcargo();
     }
-    else if (plane1.getTypeOfFlight() == "a") // if landing (arrival)
+    else if (plane1.getTypeOfFlight() == "a" || plane1.getTypeOfFlight() == "A") // if landing (arrival)
     {
         numArrive ++;
         sumLandWait += (time - plane1.getabsoluteTimeAvailableForProcessing());
@@ -105,7 +105,7 @@ void PlaneStats::updateAll(int time, Plane plane1)
 ///////////////////////////////////////
 // PRINT FUNCTION -- DEFINITION
 ///////////////////////////////////////
-void PlaneStats::print(int time)
+void PlaneStats::print()
 {
     cout << "Average takeoff wait time: " << (sumTakeoffWait / numDepart) << endl;
     cout << "Average landing wait time: " << (sumLandWait / numArrive) << endl;
@@ -122,7 +122,7 @@ void PlaneStats::print(int time)
     cout << "Total amount of cargo destroyed: " << sumCargoDestroyed << endl;
 
     // need total time value (NEED TO USE SOME CLOCK)
-    cout << "Total amount of time it takes to process a input file: " << time << endl;
+    //cout << "Total amount of time it takes to process a input file: " << time << endl;
 }
 
 

@@ -14,6 +14,7 @@
 #define DATASIZEMAX 8
 #include "Plane.h"
 #include <cctype>
+#include "ATC.h"
 
 using namespace std;
 
@@ -71,7 +72,7 @@ public:
 		}
 
 	}
-	void parseAndCreateQueue() {
+	void parseAndCreateQueue(ATC &controller) {
 		string filename;
 		cout << "What is the name of the file?" << endl;
 		cin >> filename;
@@ -80,17 +81,15 @@ public:
 		string lineinput;
 		cout << "Filename is: " << filename.c_str() << endl;
 		while (myFile.good()) {
-            		cout << "got in the input file. Nice!" << endl;
 			getline(myFile, lineinput);
 			if (lineinput != "") {
 				process(lineinput);
 				
 				if (getCommand() == "D" || getCommand() == "d") {
-					Plane planeObject = Plane(getTime(), static_cast<int>(getCargo()), getPeople(), getFamily(), getGrand(), getFuel(), getAction());
-					//cout << planeObject.getcargo() << endl; //Test to see that it works.
-					//controller.buildQueue(planeObject);
-
-
+					Plane *planeObject = new Plane(getTime(), static_cast<int>(getCargo()), getPeople(), getFamily(), getGrand(), getFuel(), getAction());
+					//cout << planeObject->getpassengers() << endl; //Test to see that it works.
+					controller.buildQueue(planeObject);
+					//controller.printQueue(true);
 
 				}
 			}

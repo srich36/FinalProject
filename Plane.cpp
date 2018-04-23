@@ -25,11 +25,15 @@ void Plane::refuel() {
 
 void Plane::update(int time, int timeSkipped = 1){
 
-    if(timeSkipped > 1 && fuel >> 0){
+    if(timeSkipped > 1 && fuel > 0){
         fuel-=timeSkipped;
     }
     else if(fuel>0){
         fuel--;
+    }
+
+    if(fuel < 10){
+     refuel();
     }
 
     if(time>=absoluteTimeAvailableForProcessing){
@@ -42,7 +46,11 @@ void Plane::update(int time, int timeSkipped = 1){
 }
 
 int Plane::calculateFuelFactor(int fuelAmount){
-    int fuelFactor = 20/fuelAmount;
+    int fuelFactor;
+    if(fuelAmount != 0)
+        fuelFactor = 20/fuelAmount;
+    else
+        fuelFactor = 1;
     return fuelFactor;
 }
 

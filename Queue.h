@@ -42,6 +42,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
+#include "Plane.h"
 
 using namespace std;
 
@@ -54,7 +55,7 @@ string userin = "";
 // structure definition
 //
 typedef struct node {
-    int num; // to be changed to a plane pointer
+    Plane *plane1; // to be changed to a plane pointer
     node*next;
     node*prev;
 } node;
@@ -85,14 +86,14 @@ public:
     // Add Element Front - This method adds the value passed in to the front of the array
     //
     void                            // OUT: none
-    addElementFront(int data)   // IN:  the value to be added to the array //needs to be changed to a plane
+    addElementFront(Plane *newPlane)   // IN:  the value to be added to the array //needs to be changed to a plane
     {
         //
         // Declare local variables
         //
         node *temp = new node;
 
-        temp->num = data;
+        temp->plane1 = newPlane;
         if (first == 0)
         {
             first = temp;
@@ -111,18 +112,22 @@ public:
         return;
     }
 
+    node* getFirst(){
+        return first;
+    }
+
     //
     // Add Element Back - This method adds the value passed in to the front of the array
     //
     void                           // OUT: none
-    addElementBack(int data)   // IN:  the value to be added to the array
+    addElementBack(Plane *newPlane)   // IN:  the value to be added to the array
     {
         //
         // Declare local variables
         //
         node *temp = new node;
 
-        temp->num = data;
+        temp->plane1 = newPlane;
         if (first == 0)
         {
             first = temp;
@@ -145,7 +150,7 @@ public:
     // Insert Element - This method adds the value passed in at the specified index
     //
     void                                     // OUT: none
-    insertElement(int index, int data)   // IN:  the index at which to add a value and the value to add
+    insertElement(int index, Plane *newPlane)   // IN:  the index at which to add a value and the value to add
     {
         //
         // Declare local variables
@@ -153,15 +158,15 @@ public:
         node *temp = new node;
         temp = first;
         node *temp2 = new node;
-        temp2->num = data;
+        temp2->plane1 = newPlane;
 
         if (index == 0)
         {
-            addElementFront(data);
+            addElementFront(newPlane);
         }
         else if (index == arrsize)
         {
-            addElementBack(data);
+            addElementBack(newPlane);
         }
         else
         {
@@ -183,7 +188,7 @@ public:
     // Delete Element - This method deletes the first instance of the value passed into it
     //
     bool                           // OUT: boolean of whether the delete was successful
-    deleteElement(int data)    // IN:  the value to delete the first instance of
+    deleteElement(Plane *deletedPlane)    // IN:  the value to delete the first instance of
     {
         //
         // Declare local variables
@@ -194,7 +199,7 @@ public:
 
         while ((temp != 0) && !delsuccess)
         {
-            if ((temp->num) == data)
+            if ((temp->plane1) == deletedPlane)
             {
                 if (temp == first)
                 {
@@ -231,12 +236,14 @@ public:
         if (arrsize > 1)
         {
             first = first->next;
+            delete first->prev->plane1;
             delete (first->prev);
             first->prev = 0;
             arrsize--;
         }
         else if (arrsize == 1)
         {
+            delete first->plane1;
             delete first;
             first = 0;
             last = 0;
@@ -254,12 +261,14 @@ public:
         if (arrsize > 1)
         {
             last = last->prev;
+            delete last->next->plane1;
             delete (last->next);
             last->next = 0;
             arrsize--;
         }
         else if (arrsize == 1)
         {
+            delete last->plane1;
             delete last;
             first = 0;
             last = 0;
@@ -281,12 +290,12 @@ public:
             tempj = first;
             for (int j = 1; j <= i; j++)
             {
-                if (tempj->num > tempj->next->num)
+                if (tempj->plane1->getpriority() < tempj->next->plane1->getpriority())
                 {
-                    int temp = 0;
-                    temp = tempj->next->num;
-                    tempj->next->num = tempj->num;
-                    tempj->num = temp;
+
+                    Plane *temp = tempj->next->plane1;
+                    tempj->next->plane1 = tempj->plane1;
+                    tempj->plane1 = temp;
                 }
                 tempj = tempj->next;
             }
@@ -308,23 +317,38 @@ public:
     // Print - This prints all of the elements in the array
     //
     void               // OUT: none
-    print()	       // IN:  none
+    print(bool DEBUG)	       // IN:  none
     {
+
         //
         // Declare local variables
         //
-        node *temp = new node;
-        temp = first;
+        node *temp = first;
 
-        while (temp != 0)
-        {
-            cout << temp->num << " ";
-            temp = temp->next;
+        if(DEBUG){
+            while (temp != 0)
+            {
+                cout << "Printing out the queue to debug " << endl;
+                cout << "Plane attributes are as follows: " << endl;
+                cout << "Priority: " << temp->plane1->getpriority() << endl;
+                cout << "Action: " << temp->plane1->getTypeOfFlight() << endl;
+                cout << "Absolute time request is available " << temp->plane1->getabsoluteTimeAvailableForProcessing() << endl;
+                cout << "************************************************" << endl;
+                temp = temp->next;
+            }
+
         }
-        cout << endl;
+        else {
 
-        temp = 0;
-        delete temp;
+            while (temp != 0) {
+                cout << temp->plane1->getpriority() << " ";
+                temp = temp->next;
+            }
+            cout << endl;
+
+            temp = 0;
+            delete temp;
+        }
 
         return;
     }
