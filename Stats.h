@@ -153,7 +153,7 @@ void updateAll()
         numDepart ++;
         //sumTakeoffWait += (amount of time plane has been waiting before takeoff)  // figure out wait time first
     }
-    else if (Plane.getTypeOfFlight() == 'l') // if landing (arrival)
+    else if (Plane.getTypeOfFlight() == 'a') // if landing (arrival)
     {
         numArrive ++;
         //sumLandWait += (amount of time plane has been waiting to land)    // figure out wait time first
