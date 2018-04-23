@@ -48,7 +48,7 @@ using namespace std;
 class Plane {
 
 private:
-    const double FAMILY_FACTOR = 10, GRANDCHILDREN_FACTOR = 7, CARGO_FACTOR = 1, PASSENGER_FACTOR = 1, ARRIVAL_CONSTANT = 5, DEPARTURE_FACTOR = 3;
+    const int FAMILY_FACTOR = 10, GRANDCHILDREN_FACTOR = 7, CARGO_FACTOR = 1, PASSENGER_FACTOR = 1, ARRIVAL_FACTOR = 5, DEPARTURE_FACTOR = 3;
     int cargo;
     int passengers;
     int family;
@@ -66,7 +66,7 @@ private:
 
 public:
     Plane(int absoluteTime, int cargo, int passengers, int children, int grandchildren, int numfuel, char typeOfFlight);
-    void update(int time);
+    void update(int time, int skipped);
     void setCrash(bool planeCrashed);
     void refuel();
     int getcargo();

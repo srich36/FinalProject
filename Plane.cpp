@@ -3,6 +3,8 @@
 //
 
 #include "Plane.h"
+#include <iostream>
+
 using namespace std;
 Plane::Plane(int absoluteTime, int numcargo, int numpassengers, int numfamily, int numgrandchildren, int numfuel, char typeFlight){
     absoluteTimeAvailableForProcessing = absoluteTime;
@@ -12,6 +14,7 @@ Plane::Plane(int absoluteTime, int numcargo, int numpassengers, int numfamily, i
     grandchildren = numgrandchildren;
     fuel = numfuel;
     typeOfFlight = typeFlight;
+    priority = -1;
 }
 
 
@@ -20,12 +23,16 @@ void Plane::refuel() {
     fuel+=30;
 }
 
-void Plane::update(int time){
+void Plane::update(int time, int timeSkipped = 1){
 
-    if(fuel>0){
+    if(timeSkipped > 1 && fuel >> 0){
+        fuel-=timeSkipped;
+    }
+    else if(fuel>0){
         fuel--;
     }
-    if(time==absoluteTimeAvailableForProcessing){
+
+    if(time>=absoluteTimeAvailableForProcessing){
         requestAvailableForProcessing = true;
     }
     if(requestAvailableForProcessing) {
@@ -35,7 +42,7 @@ void Plane::update(int time){
 }
 
 double Plane::calculateFuelFactor(int fuelAmount){
-    double fuelFactor = 20/fuelAmount;
+    int fuelFactor = 20/fuelAmount;
     return fuelFactor;
 }
 
@@ -44,9 +51,13 @@ void Plane::calculatePriority() {
     if(!requestAvailableForProcessing)
         priority = -1;
     else {
-        double fuelFactor = calculateFuelFactor(fuel);
+        int fuelFactor = calculateFuelFactor(fuel);
         priority = family * FAMILY_FACTOR + grandchildren * GRANDCHILDREN_FACTOR + cargo * CARGO_FACTOR +
                    passengers * PASSENGER_FACTOR + fuelFactor * fuel;
+        if(tolower(typeOfFlight) == 'd')
+            priority+=DEPARTURE_FACTOR;
+        else if(tolower(typeOfFlight) == 'a')
+            priority+=ARRIVAL_FACTOR;
     }
 }
 
