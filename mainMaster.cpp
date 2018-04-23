@@ -1,31 +1,37 @@
 //
 // Created by sean on 4/16/18.
 //
+/*
+ *
+ *
+ *
+ *
+ *
+ * MAIN MASTER IS THE MAIN .CPP FILE WE WILL BE USING TO RUN OUR PROGRAM FROM
+ *
+ *
+ *
+ *
+ *
+ *
+ */
 
 #include <iostream>
 #include "Plane.h"
 #include "Input.h"
 //#include "ATCclass.h"
 //#include "Stats.h"
-#include <cstdio>
-#include <iostream>
-#include <iomanip>
-#include <string>
-#include <fstream>
-#define DATASIZEMAX 8
-
-
+//#include "queue.h"
 using namespace std;
 
 int main(){
 
-   // ATC controller;
+    //ATC controller;
     Input object;
-    object.parseAndCreateQueue();
-   // controller.process();
 
-    //Prompting the user for the filename.
+    //THIS WILL PASS CONTROLLER INTO  THE parseAndCreateQueue METHOD WHEN THE ATC CLASS IS FULLY IMPLEMENTED//
 
-    system("pause");
+    object.parseAndCreateQueue();//controller);
+    //controller.process();
     return 0;
 }

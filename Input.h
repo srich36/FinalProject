@@ -104,7 +104,13 @@ public:
         absolutetime = 1;
     }
 
-    void parseAndCreateQueue(){
+
+    //THIS METHOD WILL TAKE AN ATC OBJECT WHEN THE ATC CLASS IS FULLY IMPLEMENTED
+
+
+    void parseAndCreateQueue(){//ATC controller){
+
+
         string filename;
         cout << "What is the name of the file?" << endl;
         cin >> filename;
@@ -112,9 +118,11 @@ public:
         //fstream does not accept string as parameters so we need to convert to constant char* using .c_str()
         fstream myFile(filename.c_str());
         string lineinput;
+        cout << "Filename is: " <<filename.c_str();
         //Reads until file is complete, ie no more newlines.
         while (myFile.good()) {
             //First line of myFile is set as the string lineinput.
+            cout << "got in the input file. Nice!" << endl;
             getline(myFile, lineinput);
             //Ignores the instances where lines are completely blank.
             if (lineinput != "") {
