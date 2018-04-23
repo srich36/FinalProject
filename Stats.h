@@ -73,13 +73,13 @@ void updateAll(int time, Plane plane)
     else if (plane.getTypeOfFlight() == 'd')    // if taking off (departure)
     {
         numDepart ++;
-        sumTakeoffWait += time - plane.getabsoluteTimeAvailableForProcessing();
+        sumTakeoffWait += (time - plane.getabsoluteTimeAvailableForProcessing());
         sumCargoSafe += plane.getcargo();
     }
     else if (plane.getTypeOfFlight() == 'a')    // if landing (arrival)
     {
         numArrive ++;
-        sumLandWait += time - plane.getabsoluteTimeAvailableForProcessing();
+        sumLandWait += (time - plane.getabsoluteTimeAvailableForProcessing());
         numPeopleArriveSafe += plane.getpassengers();
         sumCargoSafe += plane.getcargo();
     }
@@ -122,3 +122,4 @@ void print(int time)
 }
 
 #endif // to close off top if statements
+
