@@ -18,133 +18,112 @@ using namespace std;
 
 class Input {
 private:
-    string command, action;
-    int time, fuel, people, family, grand, absolutetime;
-    double cargo;
+	string command, action;
+	int time, fuel, people, family, grand, absolutetime;
+	double cargo;
 public:
-    //Process function takes string lineinput as parameter. Returns nothing.
-    //Takes lineinput string and parses it.
-    void process(string lineinput) {
-        string arry[DATASIZEMAX];
-        int count = 0;
-        for (int i = 0; i < DATASIZEMAX; i++) {
-            arry[i] = "";
-        }
-        string parse = "";
+	Input() {
+		absolutetime = 1;
+	}
+	void process(string lineinput) {
+		string arry[DATASIZEMAX];
+		int count = 0;
+		for (int i = 0; i < DATASIZEMAX; i++) {
+			arry[i] = "";
+		}
+		string parse = "";
+		for (int i = 0; i < lineinput.size(); i++) {
+			if (isalpha(lineinput[i]) || isdigit(lineinput[i]) || lineinput[i] == '.') {
+				parse += lineinput[i];
+				int j = i + 1;
+				while (isalpha(lineinput[j]) || isdigit(lineinput[j]) || lineinput[j] == '.') {
+					parse += lineinput[j];
+					j++;
+				}
+				i = j;
+				arry[count] = parse;
+				count++;
+				parse = "";
+			}
+		}
+		
+		command = arry[0];
+		if (command == "D") {
+			absolutetime += stoi(arry[1]);
+			time = absolutetime;
+			action = arry[2];
+			fuel = stoi(arry[3]);
+			people = stoi(arry[4]);
+			cargo = stoi(arry[5]);
+			family = stoi(arry[6]);
+			grand = stoi(arry[7]);
+		}
+		
+		else {
+			time = -1;
+			action = -1;
+			fuel = -1;
+			people = -1;
+			cargo = -1;
+			family = -1;
+			grand = -1;
+		}
 
-        //Goes through line and if character is a letter, number, or period, add to parse string.
-        //When character is not a letter, number, or period, ie. a comma, put parse string into array. Set parse string to empty.
-        for (int i = 0; i < lineinput.size(); i++) {
-            if (isalpha(lineinput[i]) || isdigit(lineinput[i]) || lineinput[i] == '.') {
-                parse += lineinput[i];
-                int j = i + 1;
-                while (isalpha(lineinput[j]) || isdigit(lineinput[j]) || lineinput[j] == '.') {
-                    parse += lineinput[j];
-                    j++;
-                }
-                i = j;
-                arry[count] = parse;
-                count++;
-                parse = "";
-            }
-        }
-        //Command will always be the first element of the array.
-        command = arry[0];
-        //If data command, set variables equal to rest of elements in array.
-        if (command == "D") {
-            absolutetime+=stoi(arry[1]);
-            time = absolutetime;
-            action = arry[2];
-            fuel = stoi(arry[3]);
-            people = stoi(arry[4]);
-            cargo = stoi(arry[5]);
-            family = stoi(arry[6]);
-            grand = stoi(arry[7]);
-        }
-            //If the command is W or P, we null the rest of the values to a -1 placeholder to maintain type int.
-        else {
-            time = -1;
-            action = -1;
-            fuel = -1;
-            people = -1;
-            cargo = -1;
-            family = -1;
-            grand = -1;
-        }
-
-    }
-
-    //Below are get functions. Use object.get*** in main class to call these values.
-    string getCommand() {
-        return command;
-    }
-    int getTime() {
-        return time;
-    }
-    string getAction() {
-        return action;
-    }
-    int getFuel() {
-        return fuel;
-    }
-    int getPeople() {
-        return people;
-    }
-    double getCargo() {
-        return cargo;
-    }
-    int getFamily() {
-        return family;
-    }
-    int getGrand() {
-        return grand;
-    }
-
-    Input(){
-        absolutetime = 1;
-    }
-
-
-    //THIS METHOD WILL TAKE AN ATC OBJECT WHEN THE ATC CLASS IS FULLY IMPLEMENTED
-
-
-    void parseAndCreateQueue(){//ATC controller){
-
-
-        string filename;
-        cout << "What is the name of the file?" << endl;
-        cin >> filename;
-        //Creating an object that can access the functions in the input class.
-        //fstream does not accept string as parameters so we need to convert to constant char* using .c_str()
-        fstream myFile(filename.c_str());
-        string lineinput;
-        cout << "Filename is: " <<filename.c_str();
-        //Reads until file is complete, ie no more newlines.
-        while (myFile.good()) {
-            //First line of myFile is set as the string lineinput.
+	}
+	void parseAndCreateQueue() {
+		string filename;
+		cout << "What is the name of the file?" << endl;
+		cin >> filename;
+		fstream myFile(filename.c_str());
+		string lineinput;
+		cout << "Filename is: " << filename.c_str() << endl;
+		while (myFile.good()) {
             cout << "got in the input file. Nice!" << endl;
-            getline(myFile, lineinput);
-            //Ignores the instances where lines are completely blank.
-            if (lineinput != "") {
-                //Calls process functions in input class which splits by commas.
-                //You can get the value by calling object.get*****().
-                process(lineinput);
-                //If it is data, we create a new plane object by passing the values found in input into the plane constructor.
-                //We now have an plane object called plane1 which can call the functions in plane class using this data.
-                if (getCommand() == "D") {
-                    Plane plane1 = Plane(getTime(), static_cast<int>(getCargo()), getPeople(), getFamily(), getGrand(), getFuel(), getCommand());
-                    // controller.buildQueue(plane1);
-                    //cout << plane1.getchildren() << endl;
+			getline(myFile, lineinput);
+			if (lineinput != "") {
+				process(lineinput);
+				
+				if (getCommand() == "D" || getCommand() == "d") {
+					Plane planeObject = Plane(getTime(), static_cast<int>(getCargo()), getPeople(), getFamily(), getGrand(), getFuel(), getAction());
+					cout << planeObject.getcargo() << endl; //Test to see that it works.
+					//controller.buildQueue(planeObject);
 
 
-                }
-            }
-            else {
-                ;//pass
-            }
-        }
-        myFile.close();
-    }
+
+				}
+			}
+			else {
+				;
+			}
+		}
+		myFile.close();
+	}
+	string getCommand() {
+		return command;
+	}
+	int getTime() {
+		return time;
+	}
+	string getAction() {
+		return action;
+	}
+	int getFuel() {
+		return fuel;
+	}
+	int getPeople() {
+		return people;
+	}
+	double getCargo() {
+		return cargo;
+	}
+	int getFamily() {
+		return family;
+	}
+	int getGrand() {
+		return grand;
+	}
+
+	
 
 };
 
