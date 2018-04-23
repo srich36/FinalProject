@@ -11,7 +11,7 @@ using namespace std;
 /*
  * The plane class takes the following arguments in its constructor: absolute time of the request (i.e. absolute time
  * when the request is able to be processed, number of cargo,
- * number of passengers, number of children, number of grandchildren, and amount of fuel in this order
+ * number of passengers, number of family, number of grandchildren, and amount of fuel in this order
  *
  * Methods:
  *
@@ -48,10 +48,10 @@ using namespace std;
 class Plane {
 
 private:
-    const double CHILDREN_FACTOR = 10, GRANDCHILDREN_FACTOR = 7, CARGO_FACTOR = 1, PASSENGER_FACTOR = 1;
+    const double FAMILY_FACTOR = 10, GRANDCHILDREN_FACTOR = 7, CARGO_FACTOR = 1, PASSENGER_FACTOR = 1, ARRIVAL_CONSTANT = 5, DEPARTURE_FACTOR = 3;
     int cargo;
     int passengers;
-    int children;
+    int family;
     int fuel;
     int grandchildren;
     int absoluteTimeAvailableForProcessing;
@@ -65,19 +65,20 @@ private:
     double calculateFuelFactor(int fuelAmount);
 
 public:
-    Plane(int absoluteTime, int cargo, int passengers, int children, int grandchildren, int numfuel);
+    Plane(int absoluteTime, int cargo, int passengers, int children, int grandchildren, int numfuel, char typeOfFlight);
     void update(int time);
     void setCrash(bool planeCrashed);
     void refuel();
     int getcargo();
     int getpassengers();
-    int getchildren();
+    int getfamily();
     int getgrandchildren();
     int getwaitTime();
     int getpriority();
     int getcrashed();
     bool getrequestAvailableForProcessing();
     char getTypeOfFlight();
+    int getabsoluteTimeAvailableForProcessing();
 };
 
 

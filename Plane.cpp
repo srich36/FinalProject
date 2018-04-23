@@ -4,14 +4,16 @@
 
 #include "Plane.h"
 using namespace std;
-Plane::Plane(int absoluteTime, int numcargo, int numpassengers, int numchildren, int numgrandchildren, int numfuel){
+Plane::Plane(int absoluteTime, int numcargo, int numpassengers, int numfamily, int numgrandchildren, int numfuel, char typeFlight){
     absoluteTimeAvailableForProcessing = absoluteTime;
     cargo = numcargo;
     passengers = numpassengers;
-    children = numchildren;
+    family = numfamily;
     grandchildren = numgrandchildren;
     fuel = numfuel;
+    typeOfFlight = typeFlight;
 }
+
 
 void Plane::refuel() {
     absoluteTimeAvailableForProcessing+=10;
@@ -43,7 +45,7 @@ void Plane::calculatePriority() {
         priority = -1;
     else {
         double fuelFactor = calculateFuelFactor(fuel);
-        priority = children * CHILDREN_FACTOR + grandchildren * GRANDCHILDREN_FACTOR + cargo * CARGO_FACTOR +
+        priority = family * FAMILY_FACTOR + grandchildren * GRANDCHILDREN_FACTOR + cargo * CARGO_FACTOR +
                    passengers * PASSENGER_FACTOR + fuelFactor * fuel;
     }
 }
@@ -51,10 +53,12 @@ void Plane::calculatePriority() {
 void Plane::setCrash(bool planeCrashed){crashed = planeCrashed;}
 int Plane::getcargo(){return cargo;}
 int Plane::getpassengers(){return passengers;}
-int Plane::getchildren(){return children;}
+int Plane::getfamily(){return family;}
 int Plane::getgrandchildren(){return grandchildren;}
 int Plane::getwaitTime(){return waitTime;}
 int Plane::getpriority(){return priority;}
 int Plane::getcrashed(){return crashed;}
 bool Plane::getrequestAvailableForProcessing(){return requestAvailableForProcessing;}
 char Plane::getTypeOfFlight() {return typeOfFlight;}
+int Plane::getabsoluteTimeAvailableForProcessing() {return absoluteTimeAvailableForProcessing;}
+
