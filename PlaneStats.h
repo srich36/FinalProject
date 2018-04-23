@@ -1,9 +1,13 @@
-#ifndef FINALPROJECT_STATS_H    // since .h file
-#define FINALPROJECT_STATS_H    // defines file
+//
+// Created by sean on 4/23/18.
+//
 
-//#include "stdafx.h"           // needed for VS
+#ifndef FINALPROJECT_PLANESTATS_H
+#define FINALPROJECT_PLANESTATS_H
+
+
 #include "Plane.h"              // to use Sean's plane class
-#include <time>                 // to get runtime (needed for print function) ACTUALLY USE
+#include <ctime>                 // to get runtime (needed for print function) ACTUALLY USE
 
 #include <iostream>
 using namespace std;
@@ -11,7 +15,7 @@ using namespace std;
 ///////////////////////////////////////
 // CLASS -- DEFINITION
 ///////////////////////////////////////
-class Stats
+class PlaneStats
 {
 private:
     //
@@ -40,7 +44,7 @@ public:
     //
     // constructor, initialize everything to 0
     //
-    Stats()
+    PlaneStats()
     {
         sumTakeoffWait = sumLandWait = numCrash = numDepart = numArrive = numPeopleArriveSafe = numPeopleKilled = numGrandKilled = numFamilyKilled = sumGrandWait = sumFamilyWait = sumCargoSafe = sumCargoDestroyed = totalTime = numGrand = numFamily = 0;
     };
@@ -57,55 +61,51 @@ public:
 ///////////////////////////////////////
 // UPDATE FUNCTION -- DEFINITION
 ///////////////////////////////////////
-void updateAll(int time, Plane plane)
+void PlaneStats::updateAll(int time, Plane plane1)
 {
     //
     // if plane crashed, departed or arrived
     //
-    if (plane.getcrashed())                     // if plane crashes, don't care if coming/going
+    if (plane1.getcrashed())                     // if plane crashes, don't care if coming/going
     {
-        numCrashed ++;
-        numPeopleKilled += plane.getpassengers();
-        numGrandKilled += plane.getgrandchildren();
-        numFamilyKilled += plane.getfamily();
-        sumCargoDestroyed += plane.getcargo();
+        numCrash++;
+        numPeopleKilled += plane1.getpassengers();
+        numGrandKilled += plane1.getgrandchildren();
+        numFamilyKilled += plane1.getfamily();
+        sumCargoDestroyed += plane1.getcargo();
     }
-    else if (plane.getTypeOfFlight() == 'd')    // if taking off (departure)
+    else if (plane1.getTypeOfFlight() == "d")    // if taking off (departure)
     {
         numDepart ++;
-        sumTakeoffWait += (time - plane.getabsoluteTimeAvailableForProcessing());
-        sumCargoSafe += plane.getcargo();
+        sumTakeoffWait += (time - plane1.getabsoluteTimeAvailableForProcessing());
+        sumCargoSafe += plane1.getcargo();
     }
-<<<<<<< HEAD
-    else if (Plane.getTypeOfFlight() == 'a') // if landing (arrival)
-=======
-    else if (plane.getTypeOfFlight() == 'a')    // if landing (arrival)
->>>>>>> 42fb3c24a3d914b97973045fbfc5f507c1ba7ace
+    else if (plane1.getTypeOfFlight() == "a") // if landing (arrival)
     {
         numArrive ++;
-        sumLandWait += (time - plane.getabsoluteTimeAvailableForProcessing());
-        numPeopleArriveSafe += plane.getpassengers();
-        sumCargoSafe += plane.getcargo();
+        sumLandWait += (time - plane1.getabsoluteTimeAvailableForProcessing());
+        numPeopleArriveSafe += plane1.getpassengers();
+        sumCargoSafe += plane1.getcargo();
     }
     //
     // if plane holds grandchildren and/or family members
     //
-    if (plane.getgrandchildren())
+    if (plane1.getgrandchildren())
     {
-        sumGrandWait += (plane.getgrandchildren()) * (time - plane.getabsoluteTimeAvailableForProcessing());
-        numGrand += plane.getgrandchildren());
+        sumGrandWait += (plane1.getgrandchildren()) * (time - plane1.getabsoluteTimeAvailableForProcessing());
+        numGrand += plane1.getgrandchildren();
     }
-    if (plane.getfamily())
+    if (plane1.getfamily())
     {
-        sumFamilyWait += (plane.getfamily()) * (time - plane.getabsoluteTimeAvailableForProcessing());
-        numFamily += plane.getfamily());
+        sumFamilyWait += (plane1.getfamily()) * (time - plane1.getabsoluteTimeAvailableForProcessing());
+        numFamily += plane1.getfamily();
     }
 }
 
 ///////////////////////////////////////
 // PRINT FUNCTION -- DEFINITION
 ///////////////////////////////////////
-void print(int time)
+void PlaneStats::print(int time)
 {
     cout << "Average takeoff wait time: " << (sumTakeoffWait / numDepart) << endl;
     cout << "Average landing wait time: " << (sumLandWait / numArrive) << endl;
@@ -120,10 +120,11 @@ void print(int time)
     cout << "Average wait time for a family member arriving or departing: " << (sumFamilyWait/ numFamily) << endl;
     cout << "Total amount of cargo that landed safely: " << sumCargoSafe << endl;
     cout << "Total amount of cargo destroyed: " << sumCargoDestroyed << endl;
-    
+
     // need total time value (NEED TO USE SOME CLOCK)
     cout << "Total amount of time it takes to process a input file: " << time << endl;
 }
 
-#endif // to close off top if statements
 
+
+#endif //FINALPROJECT_PLANESTATS_H
