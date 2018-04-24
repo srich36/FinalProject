@@ -34,7 +34,6 @@ int main(){
     object.parseAndCreateQueue(controller);//controller);
 
     controller.processAllRequests();
-    controller.printStats();
 
     //controller.process();
     return 0;

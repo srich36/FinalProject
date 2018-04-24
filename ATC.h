@@ -73,6 +73,7 @@ public:
     void printQueue(bool DEBUG);
     void printStats();
     void processAllRequests();
+    int getAbsoluteTime();
 	};
 
 
@@ -115,9 +116,18 @@ void ATC::updateTime() {
     }
     node *temp = PlaneRequests.getFirst();
     while (temp != 0) {
-        temp->plane1->update(absoluteTime,
-                             timeskip); //this second value is just one because default params have not been implemented
-        temp = temp->next;
+        bool crashed = false;
+        temp->plane1->update(absoluteTime, timeskip, crashed); //this second value is just one because default params have not been implemented
+        if(crashed){
+            temp->plane1->setCrash(crashed);
+            node *temp2 = temp;
+            temp = temp->next;
+            Stats.updateAll(absoluteTime, *(temp2->plane1));
+            PlaneRequests.deleteElement(temp2->plane1);
+
+        }
+        if(!crashed) //because when crashed you already increment it
+            temp = temp->next;
     }
 }
     //else
@@ -134,7 +144,6 @@ bool ATC::actionAvailable() {
 
 void ATC::crash(Plane *planeCrashed) {
     planeCrashed->setCrash(true);
-    //statistics(plane); is this handled here or in plane?
 }
 
 void ATC::buildQueue(Plane *plane1) {
@@ -154,4 +163,6 @@ void ATC::processAllRequests(){
         process();
     }
 }
+
+int ATC::getAbsoluteTime(){return absoluteTime;}
 #endif //FINALPROJECT_ATC_H

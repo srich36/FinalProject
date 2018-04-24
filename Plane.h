@@ -49,13 +49,14 @@ using namespace std;
 class Plane {
 
 private:
-    const int FAMILY_FACTOR = 10, GRANDCHILDREN_FACTOR = 7, CARGO_FACTOR = 1, PASSENGER_FACTOR = 1, ARRIVAL_FACTOR = 5, DEPARTURE_FACTOR = 3;
+    const int FAMILY_FACTOR = 15, GRANDCHILDREN_FACTOR = 7, CARGO_FACTOR = 1, PASSENGER_FACTOR = 3, ARRIVAL_FACTOR = 8, DEPARTURE_FACTOR = 3;
     int cargo;
     int passengers;
     int family;
     int fuel;
     int grandchildren;
     int absoluteTimeAvailableForProcessing;
+    int initialTimeAvailableForProcessing;
     int waitTime;
     double priority;
     bool crashed;
@@ -67,7 +68,7 @@ private:
 
 public:
     Plane(int absoluteTime, int cargo, int passengers, int family, int grandchildren, int numfuel, string typeOfFlight);
-    void update(int time, int skipped);
+    void update(int time, int skipped, bool &);
     void setCrash(bool planeCrashed);
     void refuel();
     int getcargo();
@@ -80,6 +81,7 @@ public:
     bool getrequestAvailableForProcessing();
     string getTypeOfFlight();
     int getabsoluteTimeAvailableForProcessing();
+    int getInitialTimeAvailableForProcessing();
 };
 
 

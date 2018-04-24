@@ -61,7 +61,8 @@ public:
 			grand = stoi(arry[7]);
 		}
 		
-		else {
+		else{
+
 			time = -1;
 			action = -1;
 			fuel = -1;
@@ -92,6 +93,16 @@ public:
 					//controller.printQueue(true);
 
 				}
+                else if(command == "P" || command == "p"){
+                    controller.processAllRequests();
+                    controller.printStats();
+                }
+                else if(command == "w" || command == "W"){
+                    string temp;
+                    cout << "Wating for carriage return. Hit enter when ready to continue " << endl;
+                    cin.ignore();
+                    getline(cin, temp);
+                }
 			}
 			else {
 				;

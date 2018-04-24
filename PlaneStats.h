@@ -67,7 +67,16 @@ void PlaneStats::updateAll(int time, Plane plane1)
 {
     //
     // if plane crashed, departed or arrived
+
     //
+    /*if(time - plane1.getInitialTimeAvailableForProcessing() < 0){
+        cout << "Negative time somehow? \n " << endl;
+        cout << "Absolute time that it is: " << time << endl;
+        cout << "Initial Time it was Avalailable for processing: " << plane1.getInitialTimeAvailableForProcessing() << endl;
+        cout << "passengers on board: to identify the plane: " << plane1.getpassengers() << endl;
+        cout << "**********************************************" << endl;
+    }
+     */
     if (plane1.getcrashed())                     // if plane crashes, don't care if coming/going
     {
         numCrash++;
@@ -75,17 +84,19 @@ void PlaneStats::updateAll(int time, Plane plane1)
         numGrandKilled += plane1.getgrandchildren();
         numFamilyKilled += plane1.getfamily();
         sumCargoDestroyed += plane1.getcargo();
+        return;
     }
     else if (plane1.getTypeOfFlight() == "d" || plane1.getTypeOfFlight() == "D")    // if taking off (departure)
     {
+
         numDepart ++;
-        sumTakeoffWait += (time - plane1.getabsoluteTimeAvailableForProcessing());
+        sumTakeoffWait += (time - plane1.getInitialTimeAvailableForProcessing());
         sumCargoSafe += plane1.getcargo();
     }
     else if (plane1.getTypeOfFlight() == "a" || plane1.getTypeOfFlight() == "A") // if landing (arrival)
     {
         numArrive ++;
-        sumLandWait += (time - plane1.getabsoluteTimeAvailableForProcessing());
+        sumLandWait += (time - plane1.getInitialTimeAvailableForProcessing());
         numPeopleArriveSafe += plane1.getpassengers();
         sumCargoSafe += plane1.getcargo();
     }
@@ -94,12 +105,12 @@ void PlaneStats::updateAll(int time, Plane plane1)
     //
     if (plane1.getgrandchildren())
     {
-        sumGrandWait += (plane1.getgrandchildren()) * (time - plane1.getabsoluteTimeAvailableForProcessing());
+        sumGrandWait += (plane1.getgrandchildren()) * (time - plane1.getInitialTimeAvailableForProcessing());
         numGrand += plane1.getgrandchildren();
     }
     if (plane1.getfamily())
     {
-        sumFamilyWait += (plane1.getfamily()) * (time - plane1.getabsoluteTimeAvailableForProcessing());
+        sumFamilyWait += (plane1.getfamily()) * (time - plane1.getInitialTimeAvailableForProcessing());
         numFamily += plane1.getfamily();
     }
 }
@@ -109,8 +120,8 @@ void PlaneStats::updateAll(int time, Plane plane1)
 ///////////////////////////////////////
 void PlaneStats::print()
 {
-    cout << "Average takeoff wait time: " << (sumTakeoffWait / numDepart) << endl;
-    cout << "Average landing wait time: " << (sumLandWait / numArrive) << endl;
+    cout << "Average takeoff wait time: " << (numDepart == 0 ? 0 : (static_cast<double>(sumTakeoffWait) / numDepart)) << endl;
+    cout << "Average landing wait time: " << (numArrive == 0 ? 0 : (static_cast<double>(sumLandWait) / numArrive)) << endl;
     cout << "Total number of planes crashed: " << numCrash << endl;
     cout << "Total number of planes departing: " << numDepart << endl;
     cout << "Total number of planes arriving: " << numArrive << endl;
@@ -118,13 +129,14 @@ void PlaneStats::print()
     cout << "Total number of people killed: " << numPeopleKilled << endl;
     cout << "Total number of grandchildren killed: " << numGrandKilled << endl;
     cout << "Total number of family killed: " << numFamilyKilled << endl;
-    cout << "Average wait time for a grandchild arriving or departing: " << (sumGrandWait / numGrand)<< endl;
-    cout << "Average wait time for a family member arriving or departing: " << (sumFamilyWait/ numFamily) << endl;
+    cout << "Average wait time for a grandchild arriving or departing: " << (numGrand == 0 ? 0: (static_cast<double>(sumGrandWait) / numGrand)) << endl;
+    cout << "Average wait time for a family member arriving or departing: " << (numFamily == 0 ? 0: (static_cast<double>(sumFamilyWait)/ numFamily)) << endl;
     cout << "Total amount of cargo that landed safely: " << sumCargoSafe << endl;
     cout << "Total amount of cargo destroyed: " << sumCargoDestroyed << endl;
 
     // need total time value (NEED TO USE SOME CLOCK)
     cout << "Total runtime for this input file: " << (double)(clock() - tstart)/CLOCKS_PER_SEC << " seconds" << endl;
+    cout <<"**********************************************" << endl;
 }
 
 
