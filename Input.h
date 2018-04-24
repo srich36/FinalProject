@@ -78,7 +78,7 @@ public:
 		cout << "What is the name of the file?" << endl;
 		cin >> filename;
 		fstream myFile(filename.c_str());
-        cout << myFile.is_open() << endl; //tests to see if the file is opened
+        //cout << myFile.is_open() << endl; //tests to see if the file is opened
 		string lineinput;
 		cout << "Filename is: " << filename.c_str() << endl;
 		while (myFile.good()) {

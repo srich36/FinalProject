@@ -49,7 +49,7 @@ using namespace std;
 class Plane {
 
 private:
-    const int FAMILY_FACTOR = 15, GRANDCHILDREN_FACTOR = 7, CARGO_FACTOR = 1, PASSENGER_FACTOR = 3, ARRIVAL_FACTOR = 8, DEPARTURE_FACTOR = 3;
+    const int FAMILY_FACTOR = 50000, GRANDCHILDREN_FACTOR = 100000, CARGO_FACTOR = 1, PASSENGER_FACTOR = 10000, ARRIVAL_FACTOR = 2, DEPARTURE_FACTOR = 1;
     int cargo;
     int passengers;
     int family;

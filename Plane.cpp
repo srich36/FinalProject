@@ -56,7 +56,7 @@ void Plane::update(int time, int timeSkipped, bool &crashed ){
     calculatePriority();
     if(fuel == 1 && typeOfFlight=="A" || fuel == 1 && typeOfFlight == "a") {
         if (requestAvailableForProcessing)
-            priority = 1000000;
+            priority = 100000000;
     }
 }
 
@@ -76,7 +76,12 @@ void Plane::calculatePriority() {
     else {
         int fuelFactor = calculateFuelFactor(fuel);
         priority = family * FAMILY_FACTOR + grandchildren * GRANDCHILDREN_FACTOR + cargo * CARGO_FACTOR +
-                   passengers * PASSENGER_FACTOR + fuelFactor * (30-fuel);
+                   passengers * PASSENGER_FACTOR;
+        if(fuel>=30){
+            priority+=fuelFactor;
+        }
+        else
+            priority += fuelFactor*(30-fuel);
         if(typeOfFlight == "D" || typeOfFlight == "d")
             priority+=DEPARTURE_FACTOR;
         else if(typeOfFlight == "A" || typeOfFlight == "a")
