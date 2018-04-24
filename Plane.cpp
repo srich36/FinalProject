@@ -16,6 +16,7 @@ Plane::Plane(int absoluteTime, int numcargo, int numpassengers, int numfamily, i
     typeOfFlight = typeFlight;
     priority = -1;
     requestAvailableForProcessing = false;
+    crashed = false;
 }
 
 
